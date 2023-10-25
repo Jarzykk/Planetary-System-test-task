@@ -1,25 +1,21 @@
+using System;
 using UnityEngine;
 
 public class PlanetaryObject : MonoBehaviour, IPlanetaryObject
 {
     private double _mass;
-    private float _distanceToPlanetarySystemCenter;
     private float _orbitalSpeed;
     private Vector3 _centerOfSystemPosition;
     private PlanetProperties _planetProperties;
-    
-    public PlanetaryObject(double mass, float radius, float distanceToPlanetarySystemCenter, float orbitalSpeed, Vector3 centerOfSystemPosition)
-    {
-        Initialize(mass, radius, distanceToPlanetarySystemCenter, orbitalSpeed, centerOfSystemPosition);
-    }
+    private PlanetType _planetType;
 
-    public void Initialize(double mass, float radius, float distanceToPlanetarySystemCenter, float orbitalSpeed, Vector3 centerOfSystemPosition)
+    public void Initialize(PlanetType planetType, double mass, float radius, float orbitalSpeed, Vector3 centerOfSystemPosition)
     {
         _mass = mass;
-        _distanceToPlanetarySystemCenter = distanceToPlanetarySystemCenter;
         _orbitalSpeed = orbitalSpeed;
         _centerOfSystemPosition = centerOfSystemPosition;
         _planetProperties = new PlanetProperties(mass, radius);
+        _planetType = planetType;
 
         transform.localScale = new Vector3(radius, radius, radius);
     }

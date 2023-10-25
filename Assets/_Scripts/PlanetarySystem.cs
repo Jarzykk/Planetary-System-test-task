@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class PlanetarySystem : IPlanetarySystem
 {
-    private Vector3 _centerOfSystem;
-    
     private List<IPlanetaryObject> _planetaryObjects = new List<IPlanetaryObject>();
 
-    public PlanetarySystem(Vector3 centerOfSystem)
-    {
-        _centerOfSystem = centerOfSystem;
-    }
+    public int PlanetaryObjectsAmount => _planetaryObjects.Count;
     
     public IEnumerable<IPlanetaryObject> GetPlanetaryObjects()
     {
