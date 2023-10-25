@@ -6,14 +6,14 @@ public class PlanetaryObject : MonoBehaviour, IPlanetaryObject
     private double _mass;
     private float _orbitalSpeed;
     private Vector3 _centerOfSystemPosition;
-    private PlanetType _planetType;
+    private MassClass _massClass;
 
-    public void Initialize(PlanetType planetType, double mass, float radius, float orbitalSpeed, Vector3 centerOfSystemPosition)
+    public void Initialize(MassClass massClass, double mass, float radius, float orbitalSpeed, Vector3 centerOfSystemPosition)
     {
         _mass = mass;
         _orbitalSpeed = orbitalSpeed;
         _centerOfSystemPosition = centerOfSystemPosition;
-        _planetType = planetType;
+        _massClass = massClass;
 
         transform.localScale = new Vector3(radius, radius, radius);
     }
@@ -23,9 +23,9 @@ public class PlanetaryObject : MonoBehaviour, IPlanetaryObject
         return _mass;
     }
 
-    public PlanetType GetPlanetType()
+    public MassClass GetMassClass()
     {
-        return _planetType;
+        return _massClass;
     }
 
     public void OrbitalMove(float deltaTime)

@@ -52,11 +52,11 @@ public class PlanetarySystemFactory : MonoBehaviour, IPlanetarySystemFactory
         {
             double randomMass = random.NextDouble() * (totalMass - minAvailableMass) + minAvailableMass;
             
-            PlanetType createdPlanetType = PlanetDataHolder.Instance.GetPlanetTypeByMass(randomMass);
-            PlanetData planetData = PlanetDataHolder.Instance.GetPlanetDataByType(createdPlanetType);
+            MassClass createdMassClass = PlanetDataHolder.Instance.GetMassClassByMassValue(randomMass);
+            PlanetData planetData = PlanetDataHolder.Instance.GetPlanetDataByMassClass(createdMassClass);
         
             double targetMass = random.NextDouble() * (planetData.MaxMass - planetData.MinMass) + planetData.MinMass;
-            float targetRadius = PlanetDataHolder.Instance.GetRadiusByMass(createdPlanetType, targetMass);
+            float targetRadius = PlanetDataHolder.Instance.GetRadiusByMassValue(createdMassClass, targetMass);
             
             float currentSpawnAngle = Random.Range(0f, 360f);
             
@@ -66,7 +66,7 @@ public class PlanetarySystemFactory : MonoBehaviour, IPlanetarySystemFactory
             float targetSpeed = Random.Range(_minPlanetaryObjectSpeed, _maxPlanetaryObjectSpeed);
 
             PlanetaryObject createdPlanetaryObject = Instantiate(_planetaryObjectPrefab, spawnPosition, Quaternion.identity);
-            createdPlanetaryObject.Initialize(createdPlanetType, targetMass, targetRadius, targetSpeed, _centerOfSystemPosition);
+            createdPlanetaryObject.Initialize(createdMassClass, targetMass, targetRadius, targetSpeed, _centerOfSystemPosition);
             _planetarySystem.AddPlanetaryObject(createdPlanetaryObject);
             
             targetDistanceFromCenter += Random.Range(_minSpawnDistanceIncrement, _maxSpawnDistanceIncrement) + targetRadius * 2;

@@ -16,4 +16,4 @@ MonoBehaviour:
   _maxMass: 5000
   _minRadius: 3.5
   _maxRadius: 27
-  _planetType: 6
+  _massClass: 6

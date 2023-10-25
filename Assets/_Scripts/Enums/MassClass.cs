@@ -1,4 +1,4 @@
-﻿public enum PlanetType
+﻿public enum MassClass
 {
     Asteroidan,
     Mercurian,

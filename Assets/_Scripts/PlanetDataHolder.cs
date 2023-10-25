@@ -35,51 +35,51 @@ public class PlanetDataHolder : MonoBehaviour
         }
     }
 
-    public PlanetData GetPlanetDataByType(PlanetType planetType)
+    public PlanetData GetPlanetDataByMassClass(MassClass massClass)
     {
-        switch (planetType)
+        switch (massClass)
         {
-            case PlanetType.Asteroidan:
+            case MassClass.Asteroidan:
                 return _asteroidanData;
             
-            case PlanetType.Mercurian:
+            case MassClass.Mercurian:
                 return _mercurianData;
             
-            case PlanetType.Subterran:
+            case MassClass.Subterran:
                 return _subterranData;
             
-            case PlanetType.Terran:
+            case MassClass.Terran:
                 return _terranData;
             
-            case PlanetType.Superterran:
+            case MassClass.Superterran:
                 return _superTerran;
             
-            case PlanetType.Neptunian:
+            case MassClass.Neptunian:
                 return _neptunianData;
             
-            case PlanetType.Jovian:
+            case MassClass.Jovian:
                 return _jovianData;
         }
 
         return null;
     }
 
-    public PlanetType GetPlanetTypeByMass(double mass)
+    public MassClass GetMassClassByMassValue(double mass)
     {
         if (mass >= _asteroidanData.MinMass && mass < _asteroidanData.MaxMass)
-            return PlanetType.Asteroidan;
+            return MassClass.Asteroidan;
         else if (mass >= _mercurianData.MinMass && mass < _mercurianData.MaxMass)
-            return PlanetType.Mercurian;
+            return MassClass.Mercurian;
         else if (mass >= _subterranData.MinMass && mass < _subterranData.MaxMass)
-            return PlanetType.Subterran;
+            return MassClass.Subterran;
         else if (mass >= _terranData.MinMass && mass < _terranData.MaxMass)
-            return PlanetType.Terran;
+            return MassClass.Terran;
         else if (mass >= _superTerran.MinMass && mass < _superTerran.MaxMass)
-            return PlanetType.Superterran;
+            return MassClass.Superterran;
         else if (mass >= _neptunianData.MinMass && mass < _neptunianData.MaxMass)
-            return PlanetType.Neptunian;
+            return MassClass.Neptunian;
         else if (mass >= _jovianData.MinMass)
-            return PlanetType.Jovian;
+            return MassClass.Jovian;
         else
             throw new SystemException("Can't get planet type by provided mass");
     }
@@ -108,12 +108,12 @@ public class PlanetDataHolder : MonoBehaviour
         return result;
     }
 
-    public float GetRadiusByMass(PlanetType planetType, double mass)
+    public float GetRadiusByMassValue(MassClass massClass, double mass)
     {
-        double minMass = GetPlanetDataByType(planetType).MinMass;
-        double maxMass = GetPlanetDataByType(planetType).MaxMass;
-        float minRadius = GetPlanetDataByType(planetType).MinRadius;
-        float maxRadius = GetPlanetDataByType(planetType).MaxRadius;
+        double minMass = GetPlanetDataByMassClass(massClass).MinMass;
+        double maxMass = GetPlanetDataByMassClass(massClass).MaxMass;
+        float minRadius = GetPlanetDataByMassClass(massClass).MinRadius;
+        float maxRadius = GetPlanetDataByMassClass(massClass).MaxRadius;
 
         double normalizedMass = (mass - minMass) / (maxMass - minMass);
         double targetRadius = minRadius + normalizedMass * (maxRadius - minRadius);
