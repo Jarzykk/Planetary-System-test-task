@@ -2,14 +2,25 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlanetaryObject : MonoBehaviour
+public class PlanetaryObject : MonoBehaviour, IPlanetaryObject
 {
-    [SerializeField] private PlanetType _planetType;
-
-    private void Start()
+    private double _mass;
+    private PlanetProperties _planetProperties;
+    
+    public PlanetaryObject(double mass, float radius)
     {
-        PlanetData planetData = PlanetDataHolder.Instance.GetPlanetData(_planetType);
-        
-        Debug.Log(planetData.PlanetType);
+        _mass = mass;
+        _planetProperties = new PlanetProperties(mass, radius);
+
+    }
+    
+    public double GetMass()
+    {
+        return _mass;
+    }
+
+    public PlanetProperties GetPlanetProperties()
+    {
+        return _planetProperties;
     }
 }

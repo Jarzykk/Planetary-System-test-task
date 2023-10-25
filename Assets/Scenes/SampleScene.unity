@@ -339,8 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2baa88ab552e1e14994bffd33e7f962e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _planetDataHolder: {fileID: 2017580515}
-  _planetType: 0
+  _planetType: 4
 --- !u!4 &2017580514
 Transform:
   m_ObjectHideFlags: 0
