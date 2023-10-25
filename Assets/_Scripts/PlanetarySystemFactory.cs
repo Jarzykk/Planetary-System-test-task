@@ -1,25 +1,35 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class PlanetarySystemFactory : MonoBehaviour, IPlanetarySystemFactory
 {
+    [Header("Parameters")]
     [SerializeField] private double _totalMass;
-    [SerializeField] private float _spawnDistanceFromCenter = 50f;
-    [SerializeField] private float _minSpawnDistanceIncrement = 30f;
-    [SerializeField] private float _maxSpawnDistanceIncrement = 50f;
-    [SerializeField] private float _initialPlanetSpeed = 10f;
-    [SerializeField] private PlanetaryObject _planetaryObjectPrefub;
-    [SerializeField] private GameObject _sun;
+    [SerializeField] private Vector3 _centerOfSystemPosition = Vector3.zero;
     
-    private Vector3 _centerOfSystem = Vector3.zero;
+    [Header("Distance values")]
+    [SerializeField] private float _spawnDistanceFromCenter = 50f;
+    [SerializeField, Min(35f)] private float _minSpawnDistanceIncrement = 35f;
+    [SerializeField] private float _maxSpawnDistanceIncrement = 50f;
+    
+    [Header("Speed")]
+    [SerializeField] private float _minPlanetaryObjectSpeed = 5f;
+    [SerializeField] private float _maxPlanetaryObjectSpeed = 15f;
+    
+    [Header("Prefabs")]
+    [SerializeField] private PlanetaryObject _planetaryObjectPrefab;
+    
+    [Header("Other")]
+    [SerializeField] private Sun _sun;
+    
 
     private PlanetarySystem _planetarySystem;
 
     private void Start()
     {
-        _centerOfSystem = _sun.transform.position;
-        
+        _sun.transform.position = _centerOfSystemPosition;
         Create(_totalMass);
     }
 
@@ -32,53 +42,41 @@ public class PlanetarySystemFactory : MonoBehaviour, IPlanetarySystemFactory
     {
         float targetDistanceFromCenter = _spawnDistanceFromCenter;
         double minAvailableMass = PlanetDataHolder.Instance.GetMinAvailableMass();
+
+        if (_totalMass <= minAvailableMass)
+            throw new SystemException("Total mass is lesser than the tiniest planetary objest");
         
         System.Random random = new System.Random();
-        
-        float currentAngle = 0f;
-        
+
         while (totalMass > minAvailableMass)
         {
             double randomMass = random.NextDouble() * (totalMass - minAvailableMass) + minAvailableMass;
             
-            var createdPlanetType = GetSpawnPlanetParameters(randomMass, random, out var targetMass, out var targetRadius);
-            var spawnPosition = GetPlanetaryObjectSpawnPosition(targetDistanceFromCenter);
-
-            PlanetaryObject createdPlanetaryObject = Instantiate(_planetaryObjectPrefub, spawnPosition, Quaternion.identity);
+            PlanetType createdPlanetType = PlanetDataHolder.Instance.GetPlanetTypeByMass(randomMass);
+            PlanetData planetData = PlanetDataHolder.Instance.GetPlanetDataByType(createdPlanetType);
+        
+            double targetMass = random.NextDouble() * (planetData.MaxMass - planetData.MinMass) + planetData.MinMass;
+            float targetRadius = PlanetDataHolder.Instance.GetRadiusByMass(createdPlanetType, targetMass);
             
-            createdPlanetaryObject.Initialize(createdPlanetType, targetMass, targetRadius, _initialPlanetSpeed, _centerOfSystem);
+            float currentSpawnAngle = Random.Range(0f, 360f);
+            
+            Vector3 spawnPosition = transform.position + Quaternion.Euler(0, currentSpawnAngle, 0) * (transform.forward * targetDistanceFromCenter);
+            spawnPosition.y = _centerOfSystemPosition.y;
+
+            float targetSpeed = Random.Range(_minPlanetaryObjectSpeed, _maxPlanetaryObjectSpeed);
+
+            PlanetaryObject createdPlanetaryObject = Instantiate(_planetaryObjectPrefab, spawnPosition, Quaternion.identity);
+            createdPlanetaryObject.Initialize(createdPlanetType, targetMass, targetRadius, targetSpeed, _centerOfSystemPosition);
             _planetarySystem.AddPlanetaryObject(createdPlanetaryObject);
-                
+            
             targetDistanceFromCenter += Random.Range(_minSpawnDistanceIncrement, _maxSpawnDistanceIncrement) + targetRadius * 2;
             totalMass -= randomMass;
-            
+
             if (totalMass < minAvailableMass)
             {
                 break;
             }
         }
-    }
-
-    private static PlanetType GetSpawnPlanetParameters(double randomMass, System.Random random, out double targetMass,
-        out float targetRadius)
-    {
-        PlanetType createdPlanetType = PlanetDataHolder.Instance.GetPlanetTypeByMass(randomMass);
-        PlanetData planetData = PlanetDataHolder.Instance.GetPlanetDataByType(createdPlanetType);
-
-        targetMass = random.NextDouble() * (planetData.MaxMass - planetData.MinMass) + planetData.MinMass;
-        targetRadius = PlanetDataHolder.Instance.GetRadiusByMass(createdPlanetType, targetMass);
-        return createdPlanetType;
-    }
-
-    private Vector3 GetPlanetaryObjectSpawnPosition(float targetDistanceFromCenter)
-    {
-        float currentAngle;
-        currentAngle = Random.Range(0, 360f);
-
-        Vector3 spawnPosition = (transform.position +
-                                 Quaternion.Euler(0, currentAngle, 0) *
-                                 (transform.forward * targetDistanceFromCenter));
-        return spawnPosition;
     }
 
     public IPlanetarySystem Create(double mass)

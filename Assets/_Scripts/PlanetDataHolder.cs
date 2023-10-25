@@ -97,11 +97,11 @@ public class PlanetDataHolder : MonoBehaviour
 
     public double GetMinAvailableMass()
     {
-        double result = _asteroidanData.MaxMass;
+        double result = 0;
 
         foreach (var planetData in _planetDataGroup)
         {
-            if (result > planetData.MinMass && planetData.MinMass > 0)
+            if (result > planetData.MinMass && planetData.MinMass > 0 || result == 0)
                 result = planetData.MinMass;
         }
 

@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlanetarySystem : IPlanetarySystem
 {
     private List<IPlanetaryObject> _planetaryObjects = new List<IPlanetaryObject>();
-
-    public int PlanetaryObjectsAmount => _planetaryObjects.Count;
     
     public IEnumerable<IPlanetaryObject> GetPlanetaryObjects()
     {

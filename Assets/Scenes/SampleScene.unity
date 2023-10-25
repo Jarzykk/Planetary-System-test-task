@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &172271367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1317598316243084733, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
+  m_PrefabInstance: {fileID: 7810371680474438611}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &172271372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172271367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7fcbc9875c0394ab2c5d1356470e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 450, z: 0}
+  m_LocalPosition: {x: 0, y: 500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -487,8 +504,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817057712}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -43.2, z: 0}
-  m_LocalScale: {x: 22, y: 22, z: 22}
+  m_LocalPosition: {x: 0, y: -200, z: 0}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -503,6 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1844286246}
+  - component: {fileID: 1844286247}
   m_Layer: 0
   m_Name: PlanetarySystemFactory
   m_TagString: Untagged
@@ -525,6 +543,27 @@ Transform:
   m_Father: {fileID: 1273788005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1844286247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844286245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3846137a81540339ee41a5a6dfd646f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totalMass: 10000
+  _centerOfSystemPosition: {x: 0, y: 0, z: 0}
+  _spawnDistanceFromCenter: 30
+  _minSpawnDistanceIncrement: 35
+  _maxSpawnDistanceIncrement: 50
+  _minPlanetaryObjectSpeed: 30
+  _maxPlanetaryObjectSpeed: 50
+  _planetaryObjectPrefab: {fileID: 2914472961590922462, guid: 7f6aa6d0a0563264fa4f876ce154134d, type: 3}
+  _sun: {fileID: 172271372}
 --- !u!1 &2017580512
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +574,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2017580514}
   - component: {fileID: 2017580515}
-  - component: {fileID: 2017580516}
   m_Layer: 0
   m_Name: PlanetDataHolder
   m_TagString: Untagged
@@ -577,25 +615,6 @@ MonoBehaviour:
   _superTerran: {fileID: 11400000, guid: 4976950848aebac498980ccf0aaa4d36, type: 2}
   _neptunianData: {fileID: 11400000, guid: 627d11bf1a0b31d448af39544787d83a, type: 2}
   _jovianData: {fileID: 11400000, guid: e853aa91daffe1149ae6faac1bd95779, type: 2}
---- !u!114 &2017580516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017580512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3846137a81540339ee41a5a6dfd646f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _totalMass: 1000
-  _spawnDistanceFromCenter: 60
-  _minSpawnDistanceIncrement: 5
-  _maxSpawnDistanceIncrement: 10
-  _initialPlanetSpeed: 35
-  _planetaryObjectPrefub: {fileID: 2914472961590922462, guid: 7f6aa6d0a0563264fa4f876ce154134d, type: 3}
-  _sun: {fileID: 0}
 --- !u!1001 &7810371680474438611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -611,6 +630,18 @@ PrefabInstance:
     - target: {fileID: 7716939833440207470, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716939833440207470, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716939833440207470, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716939833440207470, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7716939833440207470, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -655,5 +686,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1317598316243084733, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 172271372}
   m_SourcePrefab: {fileID: 100100000, guid: fd6bee0ddecc27f489886c9936993ce7, type: 3}
