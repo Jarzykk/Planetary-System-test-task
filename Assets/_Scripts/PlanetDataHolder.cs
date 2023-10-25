@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlanetDataHolder : MonoBehaviour
 {
@@ -10,6 +11,26 @@ public class PlanetDataHolder : MonoBehaviour
     [SerializeField] private PlanetData _neptunianData;
     [SerializeField] private PlanetData _jovianData;
     
+    public static PlanetDataHolder Instance { get; private set; }
+
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
+    private void SetSingleton()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public PlanetData GetPlanetData(PlanetType planetType)
     {
         switch (planetType)
